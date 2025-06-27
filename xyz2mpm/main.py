@@ -1,18 +1,18 @@
 # Main pipeline to convert topographic surfaces into MPM-ready particle files
-from preproc.translate_and_filter import translate_and_filter
-from preproc.remove_inside_points import filter_points_inside_failure
-from preproc.merge_surfaces import merge_surface_files
-from mesh.generate_stl_from_xyz import generate_stl_from_xyz
-from particles.generate_material_points import generate_material_points_from_xyz
-from particles.filter_points_below_surface import filter_material_points_below_surface
-from particles.convert_xyz_to_json import convert_xyz_to_json_particles
+from  xyz2mpm.preproc.translate_and_filter import translate_and_filter
+from  xyz2mpm.preproc.remove_inside_points import filter_points_inside_failure
+from  xyz2mpm.preproc.merge_surfaces import merge_surface_files
+from  xyz2mpm.mesh.generate_stl_from_xyz import generate_stl_from_xyz
+from  xyz2mpm.particles.generate_material_points import generate_material_points_from_xyz
+from  xyz2mpm.particles.filter_points_below_surface import filter_material_points_below_surface
+from  xyz2mpm.particles.convert_xyz_to_json import convert_xyz_to_json_particles
 
 def run_xyz2mpm_pipeline(
     initial_xyz,
     failure_xyz,
     dx, dy, dz,
     reduction_factor=1,
-    safety_factor=0.0
+    safety_factor=1
 ):
     # Step 1: Translate and filter original surfaces
     print("Step 1: Translating and filtering input surfaces...")
@@ -44,8 +44,8 @@ if __name__ == "__main__":
     json_output = run_xyz2mpm_pipeline(
         initial_xyz="data/input/surface_before.xyz",
         failure_xyz="data/input/surface_failure.xyz",
-        dx=2.0, dy=2.0, dz=2.0,
+        dx=5.0, dy=5.0, dz=5.0,
         reduction_factor=2,
-        safety_factor=0.1
+        safety_factor=1
     )
     print(f"Pipeline completed. JSON particles file: {json_output}")
