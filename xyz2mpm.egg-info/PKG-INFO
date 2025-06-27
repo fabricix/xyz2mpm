@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: xyz2mpm
+Version: 0.1.0
+Summary: Convert XYZ topography to MPM-ready format
+Author: Fabricio Fernández
+Requires-Python: >=3.8
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: pyvista
+Requires-Dist: matplotlib
+Dynamic: author
+Dynamic: license-file
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

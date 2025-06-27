@@ -12,51 +12,54 @@ A modular Python pipeline to convert topographic surfaces (in XYZ format) into M
 - Filters particles below the STL surface
 - Exports particles as JSON list for MPM input
 
+## Installation
+
+From the root of the repository (where `setup.py` is located), run:
+
+```bash
+pip install -e .
+```
+
 ## Project Structure
 
 ```
 xyz2mpm/
-├── main.py
+├── xyz2mpm/              # Main package
+│   ├── main.py
+│   ├── __init__.py
+│   ├── preproc/
+│   ├── mesh/
+│   └── particles/
+├── examples/
+│   └── lomba_grande_slope/
+│       ├── input/
+│       ├── output/
+│       └── run_example.py
 ├── requirements.txt
-├── preproc/
-├── mesh/
-├── particles/
-└── examples/
+├── setup.py
+└── README.md
 ```
 ---
 
-## Quickstart
+## Usage
 
-### 1. Clone the repository
-
+### Option 1: Run an example
 ```bash
-git clone https://github.com/fabricix/xyz2mpm.git
-cd xyz2mpm
-```
-### 2. Install dependencies
-
-```bash
-pip install -r requirements.txt
+python examples/lomba_grande_slope/run_example.py
 ```
 
-### 3. Place your input `.xyz` files in `data/input/`
+### Option 2: Use in Python scripts or notebooks
+```python
+from xyz2mpm.main import run_xyz2mpm_pipeline
 
-- `surface_before.xyz` — topography before the event  
-- `surface_failure.xyz` — failure surface
-
-### 4. Run the pipeline
-
-```bash
-python main.py
+run_xyz2mpm_pipeline(
+    initial_xyz="input/surface_before.xyz",
+    failure_xyz="input/surface_failure.xyz",
+    dx=2.0, dy=2.0, dz=2.0,
+    reduction_factor=2,
+    safety_factor=0.1
+)
 ```
-
-This will generate:
-- A filtered and merged surface
-- An STL mesh file
-- A filtered `.xyz` file of material points
-- A `.json` file with MPM-ready particles
-
----
 
 ## Requirements
 
