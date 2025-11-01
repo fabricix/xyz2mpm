@@ -1,19 +1,16 @@
 # xyz2mpm
-
-A modular Python pipeline to convert topographic surfaces (in XYZ format) into MPM-compatible particle domains, including STL mesh generation and particle list creation.
+A modular Python pipeline to convert topographic surfaces (in XYZ format) into Material Point numerical domains, including STL mesh generation and material point list creation.
 
 ## Features
-
 - Translates surfaces to the origin
 - Filters invalid or internal points
 - Combines surfaces with failure geometry
 - Generates STL meshes with optional resolution control
 - Produces uniformly distributed material points
-- Filters particles below the STL surface
-- Exports particles as JSON list for MPM input
+- Filters material points below the STL surface
+- Exports material points as JSON list for MPM-compatible simulator
 
 ## Installation
-
 From the root of the repository (where `setup.py` is located), run:
 
 ```bash
@@ -60,9 +57,7 @@ run_xyz2mpm_pipeline(
     safety_factor=0.1
 )
 ```
-
 ## Requirements
-
 - Python ≥ 3.8
 - Packages: numpy, scipy, pyvista, matplotlib
 
@@ -75,5 +70,4 @@ MIT License – see [LICENSE](LICENSE)
 ---
 
 ## Author
-
 Developed by Prof. Dr. Fabricio Fernández – Universidad Católica del Norte
