@@ -34,6 +34,8 @@ def generate_material_points(surface_initial, surface_failure, dx, dy, dz, safet
 
     X, Y = generate_grid_xy(surface_failure, dx, dy)
     material_points = []
+    
+    z0 = min(surface_failure[:, 2].min(), surface_initial[:, 2].min()) + 0.25*dz
 
     for x, y in zip(X, Y):
         z_init = interp_initial(x, y)
@@ -45,7 +47,10 @@ def generate_material_points(surface_initial, surface_failure, dx, dy, dz, safet
             continue
 
         z_fail_adj = z_fail + safety_factor * dz
-        z_vals = np.arange(z_fail_adj, z_init, dz)
+        
+        k_min = int(np.ceil((z_fail_adj - z0) / dz))
+        k_max = int(np.floor((z_init - z0) / dz))
+        z_vals = z0 + np.arange(k_min, k_max + 1) * dz
 
         for z in z_vals:
             for i in [-0.25, 0.25]:
