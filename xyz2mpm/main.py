@@ -20,12 +20,19 @@ def run_xyz2mpm_pipeline(
     os.makedirs(output_dir, exist_ok=True)
 
     print("Step 1: Translating and filtering input surfaces...")
-    surface_initial, surface_failure, _ = translate_and_filter(initial_xyz, failure_xyz)
+    invalid_z = 3.4028234663852886e+38
+    str_invalid_z = input("Enter the invalid Z value used in the input XYZ files (default is 3.4028234663852886e+38): ")
+    if str_invalid_z.strip() != "":
+        try:
+            invalid_z = float(str_invalid_z)
+        except ValueError:
+            print("Invalid input for invalid Z value. Using default value.")
+    surface_initial, surface_failure, _ = translate_and_filter(initial_xyz, failure_xyz,invalid_z=invalid_z)
 
     print("Step 2: Removing points inside failure boundary...")
     surface_with_hole = filter_points_inside_failure(surface_initial, surface_failure)
 
-    print("Step 3: Merging initial and failure surfaces...")
+    print("Step 3: Merging initial surface with hole and the failure surface...")
     combined_surface = merge_surface_files(surface_with_hole, surface_failure)
 
     print("Step 4: Generating STL mesh...")

@@ -1,8 +1,6 @@
 import numpy as np
 
-INVALID_Z = 3.4028234663852886e+38
-
-def load_xyz(file_name):
+def load_xyz(file_name, invalid_z):
     """Loads an XYZ file and filters out invalid Z values."""
     data = []
     with open(file_name, 'r') as file:
@@ -10,7 +8,7 @@ def load_xyz(file_name):
             values = line.strip().split()
             if len(values) == 3:
                 x, y, z = map(float, values)
-                if z != INVALID_Z:
+                if z != invalid_z:
                     data.append([x, y, z])
     return np.array(data)
 
@@ -42,9 +40,9 @@ def save_translation_log(file_name, min_x, min_y, min_z):
         file.write(f"Min Y: {min_y:.6f}\n")
         file.write(f"Min Z: {min_z:.6f}\n")
 
-def translate_and_filter(input_initial, input_failure, output_initial="surface_initial_origin.xyz", output_failure="surface_failure_origin.xyz", translation_log="translation.log"):
-    surface_initial = load_xyz(input_initial)
-    surface_failure = load_xyz(input_failure)
+def translate_and_filter(input_initial, input_failure, output_initial="surface_initial_origin.xyz", output_failure="surface_failure_origin.xyz", translation_log="translation.log", invalid_z = 3.4028234663852886e+38):
+    surface_initial = load_xyz(input_initial,invalid_z)
+    surface_failure = load_xyz(input_failure,invalid_z)
 
     surface_initial, surface_failure, (min_x, min_y, min_z) = translate_surfaces_to_origin(surface_initial, surface_failure)
 
